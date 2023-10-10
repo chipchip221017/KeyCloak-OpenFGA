@@ -25,6 +25,9 @@ public class OpenFgaHelper {
     }
 
     private Boolean isTypeDefinitionHandled(String eventObjectType) {
+        LOG.info("Start checking Type Definition Handling...");
+        LOG.info(eventObjectType);
+        model.getTypeDefinitions().forEach(r -> LOG.info(String.format("Type %s ", r.getType())));
         return this.model.getTypeDefinitions().stream()
                 .filter(r -> r.getType().equalsIgnoreCase(eventObjectType))
                 .findFirst().isEmpty();
@@ -42,9 +45,11 @@ public class OpenFgaHelper {
         String eventUserType = event.getEventUserType();
         String eventUserId   = event.getTranslateUserId();
 
+        LOG.info(String.format("%s, %s, %s, %s", eventObjectType, eventObjectId, eventUserType, eventUserId));
+
         // Check if the authorization model is prepared to handle
         // this object type a.k.a TypeDefinition
-        if(isTypeDefinitionHandled(eventObjectType)) {
+        if(!isTypeDefinitionHandled(eventObjectType)) {
             // Obtain the relation based the event objectType and eventUserType
             // For now, this combination is UNIQUE in the authorization model
             String relation = getRelationFromModel(eventObjectType, eventUserType);
