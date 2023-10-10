@@ -47,6 +47,7 @@ services:
       - 8443:8443
     volumes:
       - $PWD/target/keycloak-openfga-event-publisher-1.0.0-jar-with-dependencies.jar:/opt/keycloak/providers/keycloak-openfga-event-publisher-1.0.0.jar
+      - $PWD/keycloak/initialize-poc.sh:/opt/keycloak/initialize-poc.sh
     depends_on:
       - postgres
 #        condition: service_completed_successfully

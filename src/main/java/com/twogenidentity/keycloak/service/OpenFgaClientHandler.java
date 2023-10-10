@@ -37,12 +37,21 @@ public class OpenFgaClientHandler {
                 .connectTimeout(Duration.ofSeconds(5))
                 .readTimeout(Duration.ofSeconds(5));
 
-        if(!getOpenFgaOpenStoreId().isEmpty()
-                && !getOpenFgaAuthorizationModelId().isEmpty()) {
-            configuration.storeId(getOpenFgaOpenStoreId());
-            configuration.authorizationModelId(getOpenFgaAuthorizationModelId());
-            this.isClientInitialized = true;
-        };
+        if (configuration != null) {
+            LOG.info(configuration.getApiUrl());
+        }
+        if (config != null) {
+            LOG.info(config);
+            LOG.info(config.get(OPENFGA_STORE_ID));
+            LOG.info(config.get(OPENFGA_AUTHORIZATION_MODEL_ID));
+
+            if(getOpenFgaOpenStoreId() != null && !getOpenFgaOpenStoreId().isEmpty()
+                    && getOpenFgaAuthorizationModelId() != null && !getOpenFgaAuthorizationModelId().isEmpty()) {
+                configuration.storeId(getOpenFgaOpenStoreId());
+                configuration.authorizationModelId(getOpenFgaAuthorizationModelId());
+                this.isClientInitialized = true;
+            }
+        }
 
         this.fgaHelper = new OpenFgaHelper();
         this.clientWriteOptions = new ClientWriteOptions();
